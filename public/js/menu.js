@@ -1,17 +1,19 @@
-// Protect page – require login (use user, not token)
+// Protect page: require login
 const user = JSON.parse(localStorage.getItem("user"));
 if (!user) {
   window.location.href = "login.html";
 }
 
-// show username
-document.getElementById("user-name").innerText = `👤 ${user.username || "Learner"}`;
+// Show username
+const userNameEl = document.getElementById("user-name");
+if (userNameEl) {
+  userNameEl.textContent = `User: ${user.username || "Learner"}`;
+}
 
-// go to puzzle page with selected level
+// Go to level selection page with selected level
 document.querySelectorAll("[data-level]").forEach((card) => {
   card.addEventListener("click", () => {
     const level = card.dataset.level;
     window.location.href = `game.html?level=${level}`;
   });
 });
-

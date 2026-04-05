@@ -1,26 +1,41 @@
-// backend/routes/characters.js
 const express = require("express");
 const router = express.Router();
 const Character = require("../models/Character");
 
-// GET /api/characters?hsk=1   OR  /api/characters?level=1
+// GET /api/characters?hsk=1
+// GET /api/characters?level=1
 router.get("/", async (req, res) => {
   try {
-    const q = req.query.hsk || req.query.level;
-    const level = parseInt(q, 10);
+    const queryValue = req.query.hsk || req.query.level;
 
-    if (!level) {
+    if (!queryValue) {
       return res.status(400).json({
         success: false,
-        message: "Missing query param: hsk or level",
+        message: "Missing query parameter: hsk or level",
+      });
+    }
+
+    const level = parseInt(queryValue, 10);
+
+    if (isNaN(level)) {
+      return res.status(400).json({
+        success: false,
+        message: "HSK level must be a number",
       });
     }
 
     const characters = await Character.find({ hsk: level }).lean();
-    return res.json({ success: true, characters });
+
+    return res.json({
+      success: true,
+      characters,
+    });
   } catch (err) {
-    console.error("Characters API error:", err);
-    return res.status(500).json({ success: false, message: "Server error" });
+    console.error("Characters API error:", err.message);
+    return res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
   }
 });
 

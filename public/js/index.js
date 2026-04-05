@@ -1,7 +1,11 @@
-// ✅ Protect index page (must be logged in)
+// Protect index page (must be logged in)
 const user = JSON.parse(localStorage.getItem("user"));
-if (!user) window.location.href = "login.html";
+if (!user) {
+  window.location.href = "login.html";
+}
 
-// ✅ If you have an element to show username, use it
-const userLabel = document.getElementById("user-label");
-if (userLabel) userLabel.textContent = user.username;
+// Update username label if present
+const userNameEl = document.getElementById("user-name");
+if (userNameEl) {
+  userNameEl.textContent = `User: ${user.username || "Learner"}`;
+}

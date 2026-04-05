@@ -1,5 +1,6 @@
-let bgMusic = new Audio("./audio/study.mp3"); // you will add this later
+let bgMusic = new Audio("./audio/study.mp3");
 bgMusic.loop = true;
+bgMusic.volume = 0.35;
 
 const btn = document.getElementById("music-toggle");
 let active = false;
@@ -9,9 +10,11 @@ btn.addEventListener("click", () => {
 
   if (active) {
     bgMusic.play();
-    btn.style.background = "#ff3434";
+    btn.classList.add("is-on");
+    btn.textContent = "Music On";
   } else {
     bgMusic.pause();
-    btn.style.background = "#D72323";
+    btn.classList.remove("is-on");
+    btn.textContent = "Music";
   }
 });

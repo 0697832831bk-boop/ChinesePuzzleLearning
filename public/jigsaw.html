@@ -2,271 +2,95 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HSK Jigsaw</title>
-
-  <link rel="stylesheet" href="./css/auth.css" />
-
-  <style>
-    :root{
-      --bg1:#07070a;
-      --bg2:#0b0b12;
-      --card: rgba(20,20,28,.75);
-      --border: rgba(255,255,255,.12);
-      --accent:#ff4d4d;
-      --accent2:#ff7b7b;
-      --text:#f3f3f6;
-      --muted:#b7b7c6;
-
-      --size: 360px;
-      --gap: 10px;
-    }
-
-    body{
-      margin:0;
-      min-height:100vh;
-      background:
-        radial-gradient(1200px 600px at 50% 20%, rgba(255,77,77,.12), transparent 60%),
-        linear-gradient(180deg, var(--bg1), var(--bg2));
-      color: var(--text);
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    }
-
-    .wrap{
-      max-width: 1100px;
-      margin: 32px auto;
-      padding: 0 16px;
-    }
-
-    .title{
-      text-align:center;
-      font-weight:800;
-      letter-spacing:.5px;
-      margin: 10px 0 22px;
-      color: var(--accent);
-      text-shadow: 0 0 18px rgba(255,77,77,.25);
-      font-size: 28px;
-    }
-
-    .layout{
-      display:grid;
-      grid-template-columns: 360px 1fr;
-      gap: 18px;
-      align-items:start;
-    }
-
-    @media (max-width: 980px){
-      .layout{ grid-template-columns: 1fr; }
-      :root{ --size: 330px; }
-    }
-
-    .card{
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 16px;
-      box-shadow: 0 10px 40px rgba(0,0,0,.35);
-      backdrop-filter: blur(10px);
-    }
-
-    .charRow{
-      display:flex;
-      gap: 12px;
-      align-items:center;
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: 14px;
-      padding: 12px;
-      background: rgba(0,0,0,.20);
-    }
-
-    .hanzi{
-      font-size: 64px;
-      line-height: 1;
-      font-weight: 900;
-      font-family: "Noto Sans SC","Microsoft YaHei","PingFang SC",sans-serif;
-    }
-
-    .meta{
-      display:flex;
-      flex-direction:column;
-      gap:4px;
-      min-width: 0;
-    }
-    .pinyin{ color: var(--accent2); font-weight:700; }
-    .meaning{ color: var(--muted); font-size: 14px; }
-
-    .iconBtn{
-      margin-left:auto;
-      width: 44px; height: 44px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,77,77,.16);
-      color: var(--text);
-      cursor:pointer;
-      display:grid;
-      place-items:center;
-      transition: .15s;
-    }
-    .iconBtn:hover{ transform: translateY(-1px); background: rgba(255,77,77,.24); }
-
-    .btn{
-      width:100%;
-      margin-top:10px;
-      height: 44px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,77,77,.20);
-      color: var(--text);
-      cursor:pointer;
-      font-weight: 700;
-      transition: .15s;
-    }
-    .btn:hover{ transform: translateY(-1px); background: rgba(255,77,77,.28); }
-    .btn.secondary{ background: rgba(255,255,255,.06); }
-    .btn.secondary:hover{ background: rgba(255,255,255,.10); }
-
-    .small{
-      color: var(--muted);
-      font-size: 13px;
-      margin-top: 10px;
-      line-height: 1.4;
-    }
-
-    .right{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 18px;
-    }
-
-    .boardTray{
-      display:grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: 18px;
-      align-items:start;
-    }
-
-    @media (max-width: 980px){
-      .boardTray{
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .panelTitle{
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 8px;
-      text-align:center;
-    }
-
-    .gridBox{
-      width: var(--size);
-      height: var(--size);
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: repeat(3, 1fr);
-      gap: var(--gap);
-      padding: var(--gap);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      background: rgba(255,255,255,0.03);
-      box-sizing: border-box;
-    }
-
-    #tray{
-      overflow: auto;
-      align-content: start;
-    }
-    #tray::-webkit-scrollbar{ width: 10px; }
-    #tray::-webkit-scrollbar-thumb{
-      background: rgba(255,255,255,.12);
-      border-radius: 10px;
-    }
-    #tray::-webkit-scrollbar-track{
-      background: rgba(0,0,0,.20);
-    }
-
-    .cell{
-      border: 2px dashed rgba(255,77,77,.45);
-      border-radius: 14px;
-      background: rgba(0,0,0,.15);
-      position: relative;
-    }
-
-    /* ✅ FIXED: piece should display full slice */
-    .piece{
-      width: 100%;
-      height: 100%;
-      border-radius: 12px;
-      background-size: 100% 100%;
-      background-position: center;
-      background-repeat:no-repeat;
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: 0 8px 20px rgba(0,0,0,.35);
-      cursor: grab;
-      user-select:none;
-      touch-action:none;
-    }
-    .piece:active{ cursor: grabbing; }
-
-    .locked{
-      cursor: default;
-      opacity: 1;
-      outline: 2px solid rgba(120,255,120,.35);
-    }
-
-    .status{
-      margin-top: 10px;
-      font-weight:700;
-      color: var(--muted);
-      min-height: 22px;
-      text-align:center;
-    }
-
-    .win{
-      color: #7dff9a;
-    }
-  </style>
+  <link rel="stylesheet" href="./css/jigsaw.css" />
 </head>
-
 <body>
-  <div class="wrap">
-    <div class="title">汉字拼图学习</div>
-
-    <div class="layout">
-      <div class="card">
-        <div class="charRow">
-          <div class="hanzi" id="hanzi">?</div>
-          <div class="meta">
-            <div class="pinyin" id="pinyin">—</div>
-            <div class="meaning" id="meaning">—</div>
-          </div>
-
-          <button class="iconBtn" id="speakBtn" title="Pronounce">🔊</button>
-        </div>
-
-        <button class="btn" id="musicBtn">Music: OFF</button>
-        <button class="btn" id="shuffleBtn">Shuffle</button>
-        <button class="btn secondary" id="levelsBtn">Back to Levels</button>
-        <button class="btn secondary" id="logoutBtn">Logout</button>
-
-        <div class="small" id="progress">Loading…</div>
-        <div class="status" id="status"></div>
-      </div>
-
-      <div class="right">
-        <div class="card boardTray">
-          <div>
-            <div class="panelTitle">Board (drop pieces here)</div>
-            <div class="gridBox" id="board"></div>
-          </div>
-
-          <div>
-            <div class="panelTitle">Pieces (drag from here)</div>
-            <div class="gridBox" id="tray"></div>
-          </div>
+  <div class="app">
+    <header class="zone zone-header">
+      <div class="brand-row">
+        <div class="brand-logo" role="img" aria-label="Project logo"></div>
+        <div class="title-wrap">
+          <h1 class="title">Chinese Character Jigsaw Learning</h1>
+          <p class="subtitle">Build one character at a time with clear, beginner-friendly steps.</p>
         </div>
       </div>
-    </div>
+
+      <p class="instruction">
+        Drag pieces from the tray to the board. Correct pieces lock automatically.
+        If a piece is wrong, try another spot until the full character is complete.
+      </p>
+
+      <div class="char-focus">
+        <div class="hanzi" id="hanzi">?</div>
+        <div class="meta">
+          <div class="meta-line"><span class="meta-label">Pinyin</span><span id="pinyin">-</span></div>
+          <div class="meta-line"><span class="meta-label">Meaning</span><span id="meaning">-</span></div>
+        </div>
+      </div>
+
+      <div class="progress-strip" id="progress">
+        <span class="progress-item" id="progress-level">HSK -</span>
+        <span class="progress-item" id="progress-count">Character 0/0</span>
+        <span class="progress-item" id="progress-score">Score 0</span>
+      </div>
+    </header>
+
+    <section class="zone zone-workspace">
+      <div class="workspace-panel">
+        <div class="workspace-copy">
+          <p class="workspace-kicker">Puzzle Board</p>
+          <h2>Board</h2>
+          <p class="workspace-caption">Drop pieces into the correct positions.</p>
+        </div>
+        <button class="btn btn-secondary hint-toggle" id="hintToggleBtn" type="button" aria-pressed="false">Show Hint</button>
+        <div class="board-stack" id="boardStack">
+          <div class="board-hint" id="boardHint" aria-hidden="true">?</div>
+          <div class="gridBox" id="board"></div>
+        </div>
+      </div>
+
+      <div class="workspace-panel">
+        <div class="workspace-copy">
+          <p class="workspace-kicker">Piece Tray</p>
+          <h2>Tray</h2>
+          <p class="workspace-caption">Drag pieces from here to start solving.</p>
+          <p class="workspace-note">Some pieces may contain only small stroke fragments.</p>
+        </div>
+        <div class="gridBox" id="tray"></div>
+      </div>
+    </section>
+
+    <section class="zone zone-actions">
+      <div class="controls-head">
+        <p class="workspace-kicker">Session Controls</p>
+        <p class="controls-caption">Use pronunciation, piece actions, and navigation tools without affecting the puzzle rules.</p>
+      </div>
+      <div class="controls-grid">
+        <div class="control-group">
+          <h3>Learning</h3>
+          <button class="btn btn-primary" id="speakBtn">Play Pronunciation</button>
+          <button class="btn" id="musicBtn">Background Music: Off</button>
+        </div>
+
+        <div class="control-group">
+          <h3>Puzzle Actions</h3>
+          <button class="btn btn-primary" id="shuffleBtn">Shuffle Unlocked Pieces</button>
+        </div>
+
+        <div class="control-group">
+          <h3>Navigation</h3>
+          <button class="btn btn-secondary" id="levelsBtn">Back to HSK Levels</button>
+          <button class="btn btn-secondary" id="logoutBtn">Logout</button>
+        </div>
+      </div>
+
+      <div class="status-area">
+        <p class="status-label">Session Feedback</p>
+        <p class="status status-info" id="status">Start by dragging any tray piece to the board.</p>
+      </div>
+    </section>
   </div>
 
   <script src="./js/jigsaw.js"></script>

@@ -1,26 +1,38 @@
-# Chinese Character Jigsaw Learning
+# Chinese Character Jigsaw Learning Platform
+
+A web-based educational platform for learning Chinese characters through interactive jigsaw puzzles.  
+The system allows users to register, log in, select HSK levels, and practice character recognition with pronunciation support.
+
+## Features
+
+- User registration and login
+- HSK level selection
+- Chinese character jigsaw puzzle game
+- Character pronunciation support
+- Background music control
+- MongoDB database integration for storing users and character data
+
+## Tech Stack
+
+- Node.js
+- Express.js
+- MongoDB Atlas
+- Mongoose
+- HTML
+- CSS
+- JavaScript
 
 ## Requirements
 
-- Node.js (LTS)
-- MongoDB (local or Atlas)
+Before running the project, make sure you have:
 
-## Setup
+- Node.js (LTS version recommended)
+- MongoDB Atlas account or local MongoDB installation
+- npm
 
-1. Install dependencies:
-   npm install
+## Installation
 
-2. Create a .env file in the root and add:
-   MONGO_URI=your_mongodb_connection_string
-   JWT_SECRET=your_secret
-   PORT=5000
-
-3. Run the project:
-   npm run dev
-
-## Usage
-
-- Open: http://localhost:5000
-- Register / Login
-- Select HSK level
-- Play the jigsaw game with pronunciation + music
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/0697832831bk-boop/ChinesePuzzleLearning.git
+   ```

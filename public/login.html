@@ -6,14 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/auth.css">
 </head>
-<body>
+<body class="auth-page">
 <div class="auth-container">
-    <h1 class="logo-title">汉字拼图学习</h1>
     <div class="auth-box">
-        <h2>Login</h2>
+        <div class="auth-card-head">
+            <div class="logo-slot">
+                <img
+                  class="logo-image"
+                  src="/assets/logo.png"
+                  alt="Chinese Character Jigsaw logo"
+                  onerror="this.style.display='none';this.parentElement.classList.add('logo-missing');"
+                >
+                <span class="logo-fallback" aria-hidden="true">CJL</span>
+            </div>
+            <p class="auth-kicker">Learning Access</p>
+            <h1 class="logo-title">Chinese Character Jigsaw</h1>
+            <p class="auth-subtitle">Sign in to continue your HSK learning session.</p>
+        </div>
 
-        <input type="email" id="login-email" placeholder="Email">
-        <input type="password" id="login-password" placeholder="Password">
+        <div class="form-title-block">
+            <h2>Login</h2>
+            <p>Continue with your learner account.</p>
+        </div>
+
+        <div class="field-stack">
+            <label class="field">
+                <span class="field-label">Email</span>
+                <input type="email" id="login-email" placeholder="Enter your email">
+            </label>
+
+            <label class="field">
+                <span class="field-label">Password</span>
+                <input type="password" id="login-password" placeholder="Enter your password">
+            </label>
+        </div>
 
         <button id="login-btn" class="btn-main">Login</button>
 
@@ -26,7 +52,6 @@
 
 <script src="./js/login.js"></script>
 
-<!-- audi o part -->
 <audio id="bgMusic" src="./audio/study.mp3" autoplay loop></audio>
 <script>
   const audio = document.getElementById("bgMusic");
