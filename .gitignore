@@ -22,3 +22,6 @@ Thumbs.db
 # build (if you ever add one)
 dist/
 build/
+
+# temporary review artifacts
+tmp_*/

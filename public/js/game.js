@@ -1,5 +1,3 @@
-// public/js/game.js
-
 function getUser() {
   const raw = localStorage.getItem("user");
   return raw ? JSON.parse(raw) : null;
@@ -23,14 +21,9 @@ async function loadLevel(hsk) {
       return;
     }
 
-    // ✅ Save for jigsaw page
     localStorage.setItem("hskLevel", String(hsk));
     localStorage.setItem("characters", JSON.stringify(data.characters));
-    localStorage.setItem("charIndex", "0");
-
-    // ✅ Go to JIGSAW game
     window.location.href = "jigsaw.html";
-
   } catch (err) {
     console.error("Load characters error:", err);
     charsDiv.textContent = "Failed to load characters. Check backend console.";
@@ -44,10 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // Welcome text
   document.getElementById("welcome").textContent = `Welcome, ${user.username}!`;
 
-  // HSK buttons
   document.querySelectorAll("button[data-hsk]").forEach((btn) => {
     btn.addEventListener("click", () => {
       const hsk = Number(btn.dataset.hsk);
@@ -55,12 +46,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Logout
   document.getElementById("logout-btn").addEventListener("click", () => {
     localStorage.removeItem("user");
     localStorage.removeItem("characters");
     localStorage.removeItem("hskLevel");
-    localStorage.removeItem("charIndex");
     window.location.href = "login.html";
   });
 });

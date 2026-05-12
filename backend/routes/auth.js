@@ -8,10 +8,6 @@ router.post("/register", async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
-    // ❌ REMOVE unsafe log
-    // console.log("Register body:", req.body);
-
-    // ✅ Validation
     if (!username || !email || !password) {
       return res.status(400).json({
         success: false,
@@ -27,13 +23,10 @@ router.post("/register", async (req, res) => {
       });
     }
 
-    // ✅ Hash password BEFORE saving
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     const user = new User({
       username,
       email,
-      password: hashedPassword,
+      password,
     });
 
     await user.save();
@@ -55,12 +48,6 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-
-    // ❌ REMOVE unsafe log
-    // console.log("Login body:", req.body);
-
-    // ✅ Safe log (optional)
-    console.log("Login attempt:", email);
 
     if (!email || !password) {
       return res.status(400).json({
